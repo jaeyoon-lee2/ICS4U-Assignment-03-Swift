@@ -8,7 +8,8 @@ since   2021-05-23
 var isSolved = false
 
 // This method find direction to solve the maze.
-func FindDirection(point: [Int], direction: [[Int]], maze: [[Character]]) -> [[Int]] {
+func FindDirection(point: [Int], direction: [[Int]],
+                   maze: [[Character]]) -> [[Int]] {
   var point = point
   var direction = direction
   var maze = maze
@@ -19,13 +20,17 @@ func FindDirection(point: [Int], direction: [[Int]], maze: [[Character]]) -> [[I
     var newRow = row
     var newCol = col
     if (!isSolved) {
-      if (counter == 0 && row - 1 >= 0 && !(blockedSymbols.contains(maze[col][row - 1]))) {
+      if (counter == 0 && row - 1 >= 0
+          && !(blockedSymbols.contains(maze[col][row - 1]))) {
         newRow -= 1
-      } else if (counter == 1 && row + 1 < maze[0].count && !(blockedSymbols.contains(maze[col][row + 1]))) {
+      } else if (counter == 1 && row + 1 < maze[0].count
+                 && !(blockedSymbols.contains(maze[col][row + 1]))) {
         newRow += 1
-      } else if (counter == 2 && col - 1 >= 0 && !(blockedSymbols.contains(maze[col - 1][row]))) {
+      } else if (counter == 2 && col - 1 >= 0
+                 && !(blockedSymbols.contains(maze[col - 1][row]))) {
         newCol -= 1
-      } else if (counter == 3 && col + 1 < maze.count && !(blockedSymbols.contains(maze[col + 1][row]))) {
+      } else if (counter == 3 && col + 1 < maze.count
+                 && !(blockedSymbols.contains(maze[col + 1][row]))) {
         newCol += 1
       }
       if (maze[newCol][newRow] == ".") {
@@ -33,7 +38,8 @@ func FindDirection(point: [Int], direction: [[Int]], maze: [[Character]]) -> [[I
         point[1] = newCol
         maze[newCol][newRow] = "+"
         direction.append(point)
-        direction = FindDirection(point: point, direction: direction, maze: maze)
+        direction = FindDirection(point: point, direction: direction,
+                                  maze: maze)
         if (!isSolved) {
           direction.removeLast()
         }
@@ -75,7 +81,8 @@ func AppendDirection(direction: [[Int]], maze: [[Character]]) -> [[Character]] {
 func Convert1Dto2DArray(oneDArray: [String], size: [Int]) -> [[Character]] {
   let row = size[0]
   let col = size[1]
-  var twoDArray = [[Character]](repeating: [Character](repeating: "#", count: row), count: col)
+  var twoDArray = [[Character]](repeating: [Character](repeating: "#",
+                                  count: row), count: col)
   for colIndex in 0..<col {
     for rowIndex in 0..<row {
       twoDArray[colIndex][rowIndex] = Array(oneDArray[colIndex])[rowIndex]
@@ -110,10 +117,12 @@ while let eachRow = readLine() {
   col += 1
 }
 let size: [Int] = [row, col]
-var twoDMaze: [[Character]] = Convert1Dto2DArray(oneDArray: oneDMaze, size: size)
+var twoDMaze: [[Character]] = Convert1Dto2DArray(oneDArray: oneDMaze,
+                                                 size: size)
 let startPoint: [Int] = FindStartPoint(twoDMaze: twoDMaze)
 var direction = [[Int]]()
-direction = FindDirection(point: startPoint, direction: direction, maze: twoDMaze)
+direction = FindDirection(point: startPoint, direction: direction,
+                          maze: twoDMaze)
 twoDMaze = AppendDirection(direction: direction, maze: twoDMaze)
 
 if (isSolved) {
